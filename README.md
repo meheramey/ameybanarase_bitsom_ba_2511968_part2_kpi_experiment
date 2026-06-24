@@ -73,3 +73,37 @@ To ensure operational stability and revenue quality, the following three metrics
 *(The visual diagram mapped to this logic is maintained inside the repository folders as required)*.
 * **File Path:** `outputs/kpi_tree.png`
 * **Screenshot Path:** `screenshots/kpi_tree_preview.png`
+---
+
+## 🛠️ Task 4: Clean and Prepare Experiment Data
+
+### Data Quality & Operational Cleaning Logs
+Before jumping into data grouping or statistical analysis, a rigorous data hygiene check was performed on the raw `experiment_data` sheet to ensure zero analytical bias:
+
+* **Duplicate Records Handling:** Detected **8 exact duplicate rows** for user records (including profiles like `USR-100096`, `USR-100433`, etc.). These redundant rows were systematically removed via Excel Data Deduplication, successfully bringing the analytical row count down from 1,408 to **1,400 unique users** (Control: 690, Treatment: 710).
+* **Missing Technical Values:** * `device_type` had 18 missing/blank fields.
+  * `traffic_source` had 24 missing/blank fields.
+  * All these missing categorical data cells were standardly filled with **`"Unknown"`** string labels to preserve sample sizes without corrupting secondary cohort breakdowns.
+* **Structural Domain Validation:** Ran sanity checks on behavioral metrics (`visited_landing_page`, `started_trial`, `completed_onboarding`, `converted_to_paid`). All data correctly adhered to strict binary constraints (`0` or `1`), guaranteeing zero garbage or corrupt inputs in the core experiment flow.
+---
+
+## 📊 Task 5: Experiment Summary & Insights
+
+### 1. High-Level Performance Summary Table
+The clean, non-duplicated experimental data yields the following core metrics across both groups:
+
+| Metric Name | Control Group | Treatment Group | Absolute Lift | Status / Performance |
+| :--- | :---: | :---: | :---: | :--- |
+| **Total Sample Size (Users)** | 690 | 710 | +20 Users | Balanced distribution |
+| **Landing Page Visit Rate** | 63.64% | 72.59% | +8.95% | Strong early funnel hook |
+| **Trial Start Rate** | 25.11% | 29.09% | +3.98% | Positive intent shift |
+| **Onboarding Completion Rate** | 15.58% | 21.26% | +5.68% | Reduced initial friction |
+| **Paid Conversion Rate (North Star)** | **3.19%** | **7.04%** | **+3.85%** | **More than doubled (Excellent)** |
+| **Support Ticket Rate (Guardrail)** | **14.78%** | **24.79%** | **+10.01%** | **High Alert: Substantial friction spike** |
+| **Refund Rate (Guardrail)** | 0.00% | 0.42% | +0.42% | Low absolute risk, requires tracking |
+
+### 2. Core Visual Artifacts
+* **Detailed Analysis File:** Can be reviewed directly inside [`analysis/experiment_analysis.xlsx`](analysis/experiment_analysis.xlsx).
+* **Clean Executive Workbook:** Maintained independently inside [`outputs/experiment_summary.xlsx`](outputs/experiment_summary.xlsx).
+* **Summary Dashboard Screenshot:**
+![Summary Dashboard](screenshots/summary_metrics.png)
